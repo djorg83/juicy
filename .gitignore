@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+public/js
+dist
+.DS_Store

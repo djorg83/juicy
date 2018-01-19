@@ -1,0 +1,5 @@
+public/js
+dist
+.DS_Store
+.README.md
+package-lock.json

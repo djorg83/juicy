@@ -1,0 +1,16 @@
+{
+    "ignore": [
+        "dist/**",
+        "**/repl.js",
+        ".git",
+        "node_modules/**/node_modules"
+    ],
+    "verbose": true,
+    "watch": [
+        "lib/app/*.js",
+        "lib/app/**/*.js",
+        "lib/app.js",
+        "lib/demo.js"
+    ],
+    "ext": "js"
+}

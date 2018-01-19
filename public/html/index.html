@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JS REPL</title>
+        <link rel='shortcut icon' type='image/x-icon' href='./images/favicon.ico' />
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap-3.0.2.min.css">
+        <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">
+        <link rel="stylesheet" type="text/css" href="./css/index.css">
+    </head>
+    <body>
+        <div id="content"></div>
+        <script src="./vs/loader.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            const suffix = localStorage.getItem('repl-js-suffix');
+            const replJs = suffix ? `repl-${suffix}.js` : 'repl.js';
+            const replScript = document.createElement('script');
+            replScript.setAttribute('src', `./js/${replJs}`);
+            replScript.setAttribute('type', 'text/javascript');
+            replScript.setAttribute('charset', 'utf-8');
+            document.body.appendChild(replScript);
+        </script>
+    </body>
+</html>

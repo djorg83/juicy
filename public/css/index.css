@@ -1,0 +1,71 @@
+html, body, #content {
+    background-color: #282828;
+    height: 100%;
+}
+
+#logo {
+    height: 40px;
+    padding-top: 10px;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top {
+    background-color: #3269c4;
+    background-image: none;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top a {
+    color: #fff;
+}
+
+.repl-btn {
+    background-color: transparent;
+    border: 0;
+    color: #f8f8f2;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 1em;
+    flex: 0;
+    position: relative;
+    padding: .5em .5em .4em
+}
+
+.repl-btn:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #8be9fd;
+    opacity: 0;
+    transition: all 30ms ease-in-out
+}
+
+.repl-btn:focus:after,.repl-btn:hover:after {
+    height: 4px;
+    opacity: 1
+}
+
+.repl-btn:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px
+}
+
+.repl-btn-danger:focus,.repl-btn-danger:hover {
+    color: #f55
+}
+
+.repl-btn-danger:after {
+    background: #f55
+}
+
+.btn-link:hover,.btn-link:focus {
+    outline: none;
+}
+
+.fab {
+    font-family: 'Font Awesome 5 Brands' !important;
+}
