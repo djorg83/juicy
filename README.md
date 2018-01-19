@@ -1,4 +1,4 @@
-# @djorg83/juicy
+# juicy-repl
 
 ![npm](https://img.shields.io/badge/version-0.0.1-green.svg)
 
@@ -8,15 +8,15 @@ An extensible JavaScript REPL
 
 ``` bash
 # with npm
-npm install @djorg83/juicy
+npm install juicy-repl
 
 # with yarn
-yarn add @djorg83/juicy
+yarn add juicy-repl
 ```
 
 ## Basic Example
 ``` javascript
-require('@djorg83/juicy')({
+require('juicy-repl')({
     packages: [
         'ramda',
         'joi',

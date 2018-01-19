@@ -1,5 +1,5 @@
 {
-  "name": "@djorg83/juicy",
+  "name": "juicy-repl",
   "description": "An extensible JavaScript REPL",
   "version": "0.0.1",
   "license": "UNLICENSED",
