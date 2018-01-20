@@ -1,5 +1,3 @@
-
-
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 const React = require('react');

@@ -14,7 +14,7 @@
     "watch-app": "nodemon --config ./nodemon.app.json ./lib/demo.js",
     "watch-webpack": "nodemon --config ./nodemon.webpack.json ./lib/rebuildWebpack.js",
     "watch": "concurrently \"yarn watch-app\" \"yarn watch-webpack\"",
-    "dev": "open http://localhost:3000 && yarn watch"
+    "dev": "open http://localhost:80 && yarn watch"
   },
   "dependencies": {
     "babel-core": "6.26.0",
@@ -53,10 +53,11 @@
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.5.1",
     "husky": "0.14.3",
-    "joi": "13.1.0",
+    "joi": "13.1.1",
     "moment": "2.20.1",
     "node-readme": "0.1.9",
     "nodemon": "1.14.8",
+    "swal": "0.1.0",
     "uuid": "3.2.1"
   },
   "homepage": "https://github.com/djorg83/juicy",

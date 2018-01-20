@@ -1,9 +1,9 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
-const ThemeSelect = require('./ThemeSelect.jsx');
-const Packages = require('./Packages.jsx');
-const Pins = require('./Pins.jsx');
+const ThemeSelect = require('./ThemeSelect');
+const Packages = require('./Packages');
+const Pins = require('./Pins');
 
 const baseStyle = {
     height: '100%',

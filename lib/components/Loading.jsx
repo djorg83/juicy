@@ -1,31 +1,54 @@
 const React = require('react');
+const PropTypes = require('prop-types');
+const JuicyLogo = require('./JuicyLogo');
 
-const Loading = () => (
-    <div style={{
-        position: 'absolute',
-        top: 'calc(50% - 80px)',
-        left: 'calc(50% - 80px)',
-        zIndex: '10000',
-        backgroundColor: '#fff',
-        height: '160px',
-        paddingTop: '32px',
-        width: '160px',
-        textAlign: 'center',
-        borderRadius: '100px',
-        border: '10px solid #3268c4',
-    }}
-    >
-        <div style={{
+const size = 240;
+
+const Loading = ({ color }) => (
+    <div
+        style={{
             position: 'absolute',
-            top: 28,
-            left: 23,
-            color: '#3367c4',
+            top: `calc(50% - ${size / 2}px)`,
+            left: `calc(50% - ${size / 2}px)`,
+            zIndex: '10000',
         }}
+    >
+        <div
+            style={{
+                position: 'absolute',
+                height: size,
+                width: size / 2,
+                backgroundColor: color,
+                borderTopLeftRadius: `${size * 2}px`,
+                borderBottomLeftRadius: `${size * 2}px`,
+                transformOrigin: 'center right',
+                transform: 'rotate(-30deg)',
+            }}
+        />
+        <div
+            style={{
+                position: 'absolute',
+                width: size,
+                height: size,
+                borderRadius: `${size * 2}px`,
+                backgroundColor: color,
+                textAlign: 'center',
+                animation: 'spin 3s linear infinite',
+            }}
         >
-            Loading...
+            <JuicyLogo
+                style={{
+                    width: size,
+                    height: size,
+                // animation: 'spin 3s linear infinite',
+                }}
+            />
         </div>
-        <img src="./images/loading.gif" alt="loading" />
     </div>
 );
+
+Loading.propTypes = {
+    color: PropTypes.string.isRequired,
+};
 
 module.exports = Loading;

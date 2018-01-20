@@ -69,3 +69,32 @@ html, body, #content {
 .fab {
     font-family: 'Font Awesome 5 Brands' !important;
 }
+
+/* LOGO */
+
+@keyframes spin {
+    0% {
+        transform-origin: center center;
+        transform: rotateY(0deg) rotateX(0deg) rotate(0deg);
+    }
+    50% {
+        transform-origin: center center;
+        transform: rotateY(70deg) rotateX(30deg) rotate(720deg);
+    }
+    100% {
+        transform-origin: center center;
+        transform: rotateY(0deg) rotateX(0deg) rotate(360deg);
+    }
+}
+
+/* scrabble font */
+
+.scrabble {
+    font-family: 'scramble';
+}
+
+@font-face {
+    font-family: 'scramble';
+    font-style: normal;
+    src: url("../webfonts/scramble.ttf");
+}

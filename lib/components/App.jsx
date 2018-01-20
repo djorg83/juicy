@@ -4,10 +4,10 @@ const React = require('react');
 const autobind = require('react-autobind');
 const R = require('ramda');
 const _ = require('lodash');
-const Nav = require('./Nav.jsx');
-const Repl = require('./Repl.jsx');
-const Sidebar = require('./Sidebar.jsx');
-const Loading = require('./Loading.jsx');
+const Nav = require('./Nav');
+const Repl = require('./Repl');
+const Sidebar = require('./Sidebar');
+const Loading = require('./Loading');
 const MONACO_THEMES = require('../constants/monaco-themes');
 
 const headerHeight = 50;
@@ -96,7 +96,7 @@ class App extends React.Component {
     render() {
         return (
             <div style={{ height: '100%' }}>
-                {this.state.loading && <Loading />}
+                {this.state.loading && <Loading color={this.state.stringColor} />}
                 <Nav color={this.state.stringColor} />
                 <Repl
                     id={REPL_ID}

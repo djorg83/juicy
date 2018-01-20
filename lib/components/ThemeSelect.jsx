@@ -1,5 +1,3 @@
-
-
 const React = require('react');
 const PropTypes = require('prop-types');
 const FontAwesome = require('react-fontawesome');

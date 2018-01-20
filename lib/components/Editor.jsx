@@ -6,7 +6,7 @@ const autobind = require('react-autobind');
 const R = require('ramda');
 const fetchTheme = require('../utils/fetchTheme');
 const rainglowToMonaco = require('../utils/rainglowToMonaco');
-const EditorHeader = require('./EditorHeader.jsx');
+const EditorHeader = require('./EditorHeader');
 const MONACO_THEMES = require('../constants/monaco-themes');
 
 const monacoThemes = R.values(MONACO_THEMES);
