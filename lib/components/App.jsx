@@ -74,7 +74,7 @@ class App extends React.Component {
 
         this.state = {
             cache,
-            selectedTheme: cache.getTheme() || MONACO_THEMES.VS_DARK,
+            selectedTheme: cache.getTheme() || 'peacocks-in-space',
             loading: false,
             stringColor: '#fff',
         };
