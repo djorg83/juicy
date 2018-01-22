@@ -136,7 +136,7 @@ class Repl extends React.Component {
 
                         return value;
                     })
-                    .then((value) => value.replace('use strict', ''))
+                    .then(R.when(R.is(String), R.replace('use strict', '')))
                     .then(this.setOutputValue)
             );
         }
