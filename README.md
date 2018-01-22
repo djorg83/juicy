@@ -63,15 +63,10 @@ const juicyOptions = {
 startRepl(juicyOptions);
 ```
 
-## Demo
-Start a demo REPL and open in the browser.
+## Development
 ``` bash
-yarn start
-```
-
-## Development Mode
-Start demo REPL, open in the browser, and watch for changes.
-``` bash
+git clone https://github.com/djorg83/juicy
+cd juicy
 yarn dev
 ```
 
