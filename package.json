@@ -4,19 +4,23 @@
   "version": "0.0.2",
   "license": "UNLICENSED",
   "main": "./lib/app.js",
+  "bin": {
+    "juicy": "./bin/juicy.js"
+  },
   "scripts": {
+    "start": "node ./bin/juicy.js",
+    "dev": "yarn watch",
     "precommit": "yarn lint && yarn readme && git add README.md",
     "lint": "eslint --fix . --ext .js,.jsx lib",
     "readme": "node-readme",
     "version": "yarn readme && git add README.md",
     "postversion": "git push && git push --tags && npm publish",
-    "start": "node ./lib/demo.js",
-    "watch-app": "nodemon --config ./nodemon.app.json ./lib/demo.js",
+    "watch-app": "nodemon --config ./nodemon.app.json ./bin/juicy.js --port 3001",
     "watch-webpack": "nodemon --config ./nodemon.webpack.json ./lib/rebuildWebpack.js",
-    "watch": "concurrently \"yarn watch-app\" \"yarn watch-webpack\"",
-    "dev": "open http://localhost:80 && yarn watch"
+    "watch": "concurrently \"yarn watch-app\" \"yarn watch-webpack\""
   },
   "dependencies": {
+    "args": "3.0.8",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-es2015": "6.24.1",
@@ -55,6 +59,7 @@
     "husky": "0.14.3",
     "joi": "13.1.1",
     "moment": "2.20.1",
+    "mongodb": "3.0.1",
     "node-readme": "0.1.9",
     "nodemon": "1.14.8",
     "swal": "0.1.0",

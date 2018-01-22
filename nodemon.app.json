@@ -10,7 +10,7 @@
         "lib/app/*.js",
         "lib/app/**/*.js",
         "lib/app.js",
-        "lib/demo.js"
+        "bin/juicy.js"
     ],
     "ext": "js"
 }

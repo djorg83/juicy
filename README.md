@@ -8,22 +8,48 @@ An extensible JavaScript REPL
 
 ``` bash
 # with npm
-npm install juicy-repl
+npm install -g juicy-repl
 
 # with yarn
-yarn add juicy-repl
+yarn global add juicy-repl
 ```
 
-## Basic Example
+## Examples
+
+### Run global command
+
+with command line args
+``` bash
+juicy --port 80
+```
+
+with config file
+``` bash
+juicy --config "~/REPL_CONFIG.json"
+```
+
+with config file added to path
+``` bash
+# add to ~/.bash_profile or system path
+export JUICY_CONFIG=~/REPL_CONFIG.json
+```
+``` bash
+juicy
+```
+
+### Spawn a repl from within a program
 ``` javascript
-require('juicy-repl')({
+const startRepl = require('juicy-repl');
+
+// supply any, all, or no options
+const juicyOptions = {
     packages: [
         'ramda',
         'joi',
     ],
     processTitle: 'juicy-repl',
     port: 3000,
-    autoLaunch: true,
+    detatch: true,
     replPageTitle: 'Juicy REPL',
     aliases: {
         'ramda': [
@@ -32,7 +58,9 @@ require('juicy-repl')({
             'Ramda',
         ],
     },
-});
+};
+
+startRepl(juicyOptions);
 ```
 
 ## Demo
