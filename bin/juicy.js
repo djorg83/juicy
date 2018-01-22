@@ -10,7 +10,6 @@ const args = sanitizeOptions(
     require('../lib/app/args')(defaultOptions)
 );
 
-
 const globalConfigPath = args.config || process.env.JUICY_CONFIG || null;
 
 const globalConfig = sanitizeOptions(
