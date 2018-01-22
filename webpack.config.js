@@ -16,7 +16,7 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?/,
-                include: /juicy[/\\]lib/,
+                include: /juicy-js[/\\]lib/,
                 use: 'babel-loader',
             },
         ],
