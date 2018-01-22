@@ -1,6 +1,6 @@
 # juicy-repl
 
-![npm](https://img.shields.io/badge/version-0.0.10-green.svg)
+![npm](https://img.shields.io/badge/version-0.0.11-green.svg)
 
 An extensible JavaScript REPL
 
