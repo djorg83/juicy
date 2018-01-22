@@ -1,5 +1,9 @@
 # juicy-repl
 
+An extensible JavaScript REPL
+
+[![NPM](https://nodei.co/npm/juicy-repl.png?downloads=true&stars=true)](https://nodei.co/npm/juicy-repl/)
+
 [![NPM version](http://img.shields.io/npm/v/juicy-repl.svg)](https://www.npmjs.com/package/juicy-repl)
 [![Downloads](https://img.shields.io/npm/dm/juicy-repl.svg)](https://www.npmjs.com/package/juicy-repl)
 [![David](https://img.shields.io/david/djorg83/juicy.svg?maxAge=2592000)](https://github.com/djorg83/juicy)
@@ -18,11 +22,18 @@
 [![Powered by babel](https://img.shields.io/badge/powered%20by-babel-yellowgreen.svg)](https://babeljs.io/)<br>
 [![Powered by gulp](https://img.shields.io/badge/powered%20by-gulp-yellowgreen.svg)](https://gulpjs.com/)
 
-[![NPM](https://nodei.co/npm/juicy-repl.png?downloads=true&stars=true)](https://nodei.co/npm/juicy-repl/)
+# Why use Juicy?
+- Juicy supports private npm packages. Just install `juicy-repl` globally and host it on your machine, tell it which packages to include, and in less than a minute you have a custom REPL running locally.
+- Flow. Juicy supports [Flow](https://flow.org/) syntax, allowing you to copy and paste directly from your source without making syntax modifications.
+- 300+ themes.  Juicy implements all themes from [Rainglow](https://rainglow.io/). Thanks to [Dayle Rees](https://daylerees.com) for building these themes.
+- Easy sharing. Quickly create a link to what you're working on and share it with anyone.
+- Save your work. Juicy allows you to pin your work and return to it at anytime without any need to signup or login.
+- Last but not least, Juicy is just plain awesome!
 
-An extensible JavaScript REPL
+# Demo
+[juicy-js.com](http://juicy-js.com)
 
-## Running using global command
+# Running using global command
 
 Install juicy-repl
 ``` bash
@@ -57,7 +68,7 @@ export JUICY_CONFIG=~/REPL_CONFIG.json
 juicy
 ```
 
-### Running from within a program
+# Running from within a program
 
 Install juicy-repl
 ``` bash
@@ -93,7 +104,7 @@ const juicyOptions = {
 startRepl(juicyOptions);
 ```
 
-## Development
+# Development
 ``` bash
 git clone https://github.com/djorg83/juicy
 cd juicy
