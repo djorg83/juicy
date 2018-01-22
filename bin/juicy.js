@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const R = require('ramda');
 const defaultOptions = require('../lib/app/defaultOptions');
 
