@@ -70,7 +70,44 @@ html, body, #content {
     font-family: 'Font Awesome 5 Brands' !important;
 }
 
-/* LOGO */
+/* LOGO/SPINNER */
+
+.spinner-wrapper {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
+.spinner-half-circle {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    background-color: #75ee2d;
+    border-top-left-radius: 1000px;
+    border-bottom-left-radius: 1000px;
+    transform-origin: center right;
+    transform: rotate(-30deg);
+}
+
+.spinner-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 200%;
+    background-color: #75ee2d;
+    text-align: center;
+    animation: spin 3s linear infinite;
+}
+
+.spinner-logo-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.spinner-logo {
+    width: 100%;
+}
 
 @keyframes spin {
     0% {

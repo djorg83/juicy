@@ -8,7 +8,17 @@
         <link rel="stylesheet" type="text/css" href="./css/index.css">
     </head>
     <body>
-        <div id="content"></div>
+        <div id="content">
+            <div style="position: absolute; width: 250px; height: 250px; top: calc(50% - 125px); left: calc(50% - 125px); z-index: 10000;">
+                <div class="spinner-wrapper">
+                <div class="spinner-half-circle"></div>
+                <div class="spinner-background">
+                    <div class="spinner-logo-wrapper">
+                        <img src="./images/fruit-slice.png" alt="fruit-slice" class="spinner-logo" />
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="./vs/loader.js" type="text/javascript" charset="utf-8"></script>
         <script>
             const suffix = localStorage.getItem('repl-js-suffix');

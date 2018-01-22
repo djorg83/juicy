@@ -51,7 +51,7 @@ juicy
 
 Example 2: with command line args
 ``` bash
-juicy --port 80 --detatch false --processTitle "custom-repl" --replPageTitle "My Custom REPL"
+juicy --port 80 --detach false --processTitle "custom-repl" --replPageTitle "My Custom REPL"
 ```
 
 Example 3: with config file
@@ -90,7 +90,7 @@ const juicyOptions = {
     ],
     processTitle: 'juicy-repl',
     port: 3000,
-    detatch: true,
+    detach: true,
     replPageTitle: 'Juicy REPL',
     aliases: {
         'ramda': [
@@ -160,7 +160,7 @@ The `document.title` for the REPL browser app.
 
 ----
 
-## detatch
+## detach
 Default: `true`
 If true, then the REPL server will detach into a child process and allow the main process to exit. Otheriwse the main process will suspend while the REPL server is running. It is suggested to set `detach` to `false` if using `nohup` or a process manager such as `forever` or `pm2`.
 
@@ -168,7 +168,7 @@ If true, then the REPL server will detach into a child process and allow the mai
 
 ## Command line args
 - `--port 80`
-- `--detatch false`
+- `--detach false`
 - `--processTitle "custom-repl"`
 - `--replPageTitle "My Custom REPL"`
 
