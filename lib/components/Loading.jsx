@@ -1,6 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const JuicyLogo = require('./JuicyLogo');
+const JuicySpinner = require('./JuicySpinner');
 
 const size = 240;
 
@@ -13,37 +13,7 @@ const Loading = ({ color }) => (
             zIndex: '10000',
         }}
     >
-        <div
-            style={{
-                position: 'absolute',
-                height: size,
-                width: size / 2,
-                backgroundColor: color,
-                borderTopLeftRadius: `${size * 2}px`,
-                borderBottomLeftRadius: `${size * 2}px`,
-                transformOrigin: 'center right',
-                transform: 'rotate(-30deg)',
-            }}
-        />
-        <div
-            style={{
-                position: 'absolute',
-                width: size,
-                height: size,
-                borderRadius: `${size * 2}px`,
-                backgroundColor: color,
-                textAlign: 'center',
-                animation: 'spin 3s linear infinite',
-            }}
-        >
-            <JuicyLogo
-                style={{
-                    width: size,
-                    height: size,
-                // animation: 'spin 3s linear infinite',
-                }}
-            />
-        </div>
+        <JuicySpinner size={size} color={color} />
     </div>
 );
 
