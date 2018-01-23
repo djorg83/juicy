@@ -3,9 +3,9 @@ const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
 const R = require('ramda');
 const Editor = require('./Editor');
-const logger = require('../utils/logger');
 const beautify = require('../utils/beautify');
 const babelify = require('../utils/babelify');
+const Rx = require('rxjs');
 
 const baseReplStyle = {
 };
@@ -49,16 +49,13 @@ class Repl extends React.Component {
             autoRun: autoRun === 'true' || autoRun === true,
             timer: null,
         };
+
+        this.timeout = null;
     }
 
     componentDidMount() {
         this.startTimer();
-        logger.logs$.subscribe((logs) => {
-            this.setState({
-                outputValue: logs.join('\n'),
-            });
-        });
-        setTimeout(() => logger.clearLogs(), 0);
+        this.startLoger();
     }
 
     onInputEmitValue(value) {
@@ -109,21 +106,52 @@ class Repl extends React.Component {
         );
     }
 
+    startLoger() {
+        this.logger$ = new Rx.Subject();
+        this.key = 0;
+
+        this.logger$.filter(({ key }) => key === this.key).subscribe(({ message }) => {
+            this.setState(({ outputValue }) => ({
+                outputValue: `${outputValue === null ? '' : `${outputValue}\n`}${message}`,
+            }));
+        });
+    }
+
+    clearLog() {
+        this.setState(() => ({
+            outputValue: null,
+        }));
+    }
+
     evaluate(force) {
         if (force || this.state.hasChanged) {
+            if (this.timeout != null) {
+                clearTimeout(this.timeout);
+                this.timeout = null;
+            }
+
+            this.key += 1;
+            const { key } = this;
+            const log = (...args) => this.logger$.next({ key, message: args.map(beautify) });
+
+            // eslint-disable-next-line no-unused-vars
+            const console = {
+                log,
+                warns: log,
+            };
+
             this.setState(
                 () => ({ hasChanged: false }),
                 () => babelify(this.state.inputValue)
-                    .then((babelOutput) => {
-                        logger.clearLogs();
+                    .then((babelOutput) => new Promise((resolve) => {
+                        this.clearLog();
+
                         // eslint-disable-next-line no-eval
-                        const value = R.tryCatch(eval, R.prop('message'))(babelOutput);
-                        
-                        return value;
-                    })
+                        return resolve(R.tryCatch((output) => eval(output), R.prop('message'))(babelOutput));
+                    }))
                     .then(R.when(R.is(String), R.replace('use strict', '')))
                     .then(beautify)
-                    .then(logger.addLog)
+                    .then(log)
             );
         }
     }
