@@ -3,9 +3,9 @@ const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
 const R = require('ramda');
 const Editor = require('./Editor');
-const logger = require('../utils/logger');
 const beautify = require('../utils/beautify');
 const babelify = require('../utils/babelify');
+const Rx = require('rxjs');
 
 const baseReplStyle = {
 };
@@ -53,6 +53,7 @@ class Repl extends React.Component {
 
     componentDidMount() {
         this.startTimer();
+        this.startLoger();
     }
 
     onInputEmitValue(value) {
@@ -68,23 +69,6 @@ class Repl extends React.Component {
         } else {
             this.setState(() => ({ hasChanged: false }), this.startTimer);
         }
-    }
-
-    setOutputValue(value) {
-        const logsValue = logger.getLogs();
-        const outputValue = value && beautify(value);
-
-        let output;
-
-        if (!R.isNil(outputValue)) {
-            output = logsValue + outputValue;
-        } else if (!R.isEmpty(logsValue) && !R.isNil(logsValue)) {
-            output = logsValue;
-        } else {
-            output = '';
-        }
-
-        this.setState(() => ({ outputValue: output }));
     }
 
     clearInput() {
@@ -120,24 +104,52 @@ class Repl extends React.Component {
         );
     }
 
+    startLoger() {
+        this.logger$ = new Rx.Subject();
+        this.key = 0;
+
+        this.logger$.filter(({ key }) => key === this.key).subscribe(({ message }) => {
+            this.setState(({ outputValue }) => ({
+                outputValue: `${outputValue === null ? '' : `${outputValue}\n`}${message}`,
+            }));
+        });
+    }
+
+    clearLog() {
+        this.setState(() => ({
+            outputValue: null,
+        }));
+    }
+
     evaluate(force) {
         if (force || this.state.hasChanged) {
+            if (this.timeout != null) {
+                clearTimeout(this.timeout);
+                this.timeout = null;
+            }
+
+            this.key += 1;
+            const { key } = this;
+            const log = (...args) => this.logger$.next({ key, message: args.map(beautify) });
+
+            // eslint-disable-next-line no-unused-vars
+            const console = {
+                log,
+                warns: log,
+            };
+
             this.setState(
                 () => ({ hasChanged: false }),
                 () => babelify(this.state.inputValue)
-                    .then((babelOutput) => {
-                        logger.clearLogs();
+                    .then((babelOutput) => new Promise((resolve) => {
+                        this.clearLog();
+
                         // eslint-disable-next-line no-eval
-                        let value = R.tryCatch(eval, R.prop('message'))(babelOutput);
-
-                        if (!value || !value.then) {
-                            value = Promise.resolve(value);
-                        }
-
-                        return value;
-                    })
+                        return resolve(R.tryCatch((output) => eval(output), R.prop('message'))(babelOutput));
+                    }))
                     .then(R.when(R.is(String), R.replace('use strict', '')))
-                    .then(this.setOutputValue)
+                    .then(beautify)
+                    .then(log)
             );
         }
     }
