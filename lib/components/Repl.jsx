@@ -49,8 +49,6 @@ class Repl extends React.Component {
             autoRun: autoRun === 'true' || autoRun === true,
             timer: null,
         };
-
-        this.timeout = null;
     }
 
     componentDidMount() {
