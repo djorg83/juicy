@@ -26,6 +26,8 @@ An extensible JavaScript REPL
 - Juicy supports private npm packages. Just install `juicy-repl` globally and host it on your machine, tell it which packages to include, and in less than a minute you have a custom REPL running locally.
 - Flow. Juicy supports [Flow](https://flow.org/) syntax, allowing you to copy and paste directly from your source without making syntax modifications.
 - 300+ themes.  Juicy implements all themes from [Rainglow](https://rainglow.io/). Thanks to [Dayle Rees](https://daylerees.com) for building these themes.
+- Same [editor](https://microsoft.github.io/monaco-editor/) as [VS Code](https://code.visualstudio.com/).
+- Autocomplete/intellisense
 - Easy sharing. Quickly create a link to what you're working on and share it with anyone.
 - Save your work. Juicy allows you to pin your work and return to it at anytime without any need to signup or login.
 - Last but not least, Juicy is just plain awesome!
@@ -51,7 +53,7 @@ juicy
 
 Example 2: with command line args
 ``` bash
-juicy --port 80 --detach false --processTitle "custom-repl" --replPageTitle "My Custom REPL"
+juicy --port 80 --detach false --processTitle "custom-repl" --replPageTitle "My Custom REPL" --hideHeader true
 ```
 
 Example 3: with config file
@@ -84,14 +86,11 @@ const startRepl = require('juicy-repl');
 
 // supply any, all, or no options
 const juicyOptions = {
+    port: 3000,
     packages: [
         'ramda',
         'joi',
     ],
-    processTitle: 'juicy-repl',
-    port: 3000,
-    detach: true,
-    replPageTitle: 'Juicy REPL',
     aliases: {
         'ramda': [
             'R',
@@ -99,6 +98,10 @@ const juicyOptions = {
             'Ramda',
         ],
     },
+    processTitle: 'juicy-repl',
+    replPageTitle: 'Juicy REPL',
+    detach: true,
+    hideHeader: false,
 };
 
 startRepl(juicyOptions);
@@ -115,6 +118,7 @@ yarn dev
 
 ## port
 Default: `3000`
+
 The port number the REPL server will be exposed on.
 
 ----
@@ -131,6 +135,7 @@ Default:
     'uuid',
 ]
 ```
+
 A list of npm packages to include when building the REPL.
 
 ----
@@ -144,31 +149,43 @@ Default:
     bluebird: ['Promise'],
 }
 ```
+
 Specify one or more aliases to expose as global variables for the packages.
 
 ----
 
 ## processTitle
 Default: `'juicy-repl'`
+
 The `process.title` for the REPL server process.
 
 ----
 
 ## replPageTitle
 Default: `'Juicy REPL'`
+
 The `document.title` for the REPL browser app.
 
 ----
 
 ## detach
 Default: `true`
+
 If true, then the REPL server will detach into a child process and allow the main process to exit. Otheriwse the main process will suspend while the REPL server is running. It is suggested to set `detach` to `false` if using `nohup` or a process manager such as `forever` or `pm2`.
+
+----
+
+## hideHeader
+Default: `false`
+
+If true, then the header of the REPL will be hidden.
 
 ----
 
 ## Command line args
 - `--port 80`
 - `--detach false`
+- `--hideHeader true`
 - `--processTitle "custom-repl"`
 - `--replPageTitle "My Custom REPL"`
 

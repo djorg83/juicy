@@ -141,24 +141,58 @@ class Packages extends React.Component {
                 <span style={{ display: 'block', fontWeight: 'normal' }}>
                     Packages:&nbsp;
                 </span>
-                <ul style={{ paddingLeft: 0, listStyle: 'none' }}>
+                <ul
+                    style={{
+                        paddingLeft: 0,
+                        listStyle: 'none',
+                        position: 'relative',
+                    }}
+                >
                     {Object.keys(this.props.packageVersions).map((name) => (
                         <li
                             key={`package-${name}`}
-                            style={{ fontSize: 12 }}
-                        >
-                            <div style={{ color: this.props.stringColor }}>
-                                <FontAwesome className="fab" name="js" style={{ color: '#d0d0d0' }} />
-                                &nbsp;
-                                {name}
-                            </div>
-                            <div style={{
-                                fontSize: 9,
-                                color: '#ccc',
+                            style={{
+                                height: 30,
                                 position: 'relative',
-                                top: -5,
-                                left: 15,
                             }}
+                        >
+                            <FontAwesome
+                                className="fab"
+                                name="js"
+                                style={{
+                                    color: '#d0d0d0',
+                                    fontSize: 23,
+                                    position: 'absolute',
+                                    top: 1,
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    left: 26,
+                                    top: -2,
+                                }}
+                            >
+                                <a
+                                    href={`https://www.npmjs.com/package/${name}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                        textDecoration: 'none',
+                                        color: this.props.stringColor,
+                                    }}
+                                >
+                                    {name}
+                                </a>
+                            </div>
+                            <div
+                                style={{
+                                    fontSize: 9,
+                                    color: '#ccc',
+                                    position: 'absolute',
+                                    top: 14,
+                                    left: 26,
+                                }}
                             >
                                     v{this.props.packageVersions[name]}
                             </div>

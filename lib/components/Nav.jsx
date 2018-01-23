@@ -33,6 +33,8 @@ class Nav extends React.Component {
                     <a
                         href="https://github.com/djorg83/juicy"
                         className="navbar-left"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{ textDecoration: 'none' }}
                     >
                         <div

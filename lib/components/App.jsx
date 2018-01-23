@@ -14,15 +14,6 @@ const headerHeight = 50;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
-const fullHeight = {
-    height: `calc(100% - ${headerHeight}px)`,
-    position: 'relative',
-    top: `${headerHeight}px`,
-};
-
-const replStyle = Object.assign({}, fullHeight, { float: 'left', width: `calc(100% - ${sidebarWidth}px)` });
-const sidebarStyle = Object.assign({}, fullHeight, { width: `${sidebarWidth}px` });
-
 const suffix = localStorage.getItem('repl-js-suffix');
 const configFile = suffix ? `repl-config-${suffix}` : 'repl-config';
 const {
@@ -33,7 +24,17 @@ const {
     packageMethods,
     packageVersions,
     definedThemes,
+    hideHeader,
 } = require(`../../dist/${configFile}`);
+
+const fullHeight = {
+    height: hideHeader ? '100%' : `calc(100% - ${headerHeight}px)`,
+    position: 'relative',
+    top: hideHeader ? 0 : `${headerHeight}px`,
+};
+
+const replStyle = Object.assign({}, fullHeight, { float: 'left', width: `calc(100% - ${sidebarWidth}px)` });
+const sidebarStyle = Object.assign({}, fullHeight, { width: `${sidebarWidth}px` });
 
 const autocomplete = require('../utils/autocomplete')({ packageMethods, packageAliases });
 
@@ -97,7 +98,7 @@ class App extends React.Component {
         return (
             <div style={{ height: '100%' }}>
                 {this.state.loading && <Loading color={this.state.stringColor} />}
-                <Nav color={this.state.stringColor} />
+                {!hideHeader && <Nav color={this.state.stringColor} />}
                 <Repl
                     id={REPL_ID}
                     style={replStyle}
