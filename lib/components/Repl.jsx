@@ -53,6 +53,12 @@ class Repl extends React.Component {
 
     componentDidMount() {
         this.startTimer();
+        logger.logs$.subscribe((logs) => {
+            this.setState({
+                outputValue: logs.join('\n'),
+            });
+        });
+        setTimeout(() => logger.clearLogs(), 0);
     }
 
     onInputEmitValue(value) {
@@ -68,23 +74,6 @@ class Repl extends React.Component {
         } else {
             this.setState(() => ({ hasChanged: false }), this.startTimer);
         }
-    }
-
-    setOutputValue(value) {
-        const logsValue = logger.getLogs();
-        const outputValue = value && beautify(value);
-
-        let output;
-
-        if (!R.isNil(outputValue)) {
-            output = logsValue + outputValue;
-        } else if (!R.isEmpty(logsValue) && !R.isNil(logsValue)) {
-            output = logsValue;
-        } else {
-            output = '';
-        }
-
-        this.setState(() => ({ outputValue: output }));
     }
 
     clearInput() {
@@ -128,16 +117,13 @@ class Repl extends React.Component {
                     .then((babelOutput) => {
                         logger.clearLogs();
                         // eslint-disable-next-line no-eval
-                        let value = R.tryCatch(eval, R.prop('message'))(babelOutput);
-
-                        if (!value || !value.then) {
-                            value = Promise.resolve(value);
-                        }
-
+                        const value = R.tryCatch(eval, R.prop('message'))(babelOutput);
+                        
                         return value;
                     })
                     .then(R.when(R.is(String), R.replace('use strict', '')))
-                    .then(this.setOutputValue)
+                    .then(beautify)
+                    .then(logger.addLog)
             );
         }
     }
