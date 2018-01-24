@@ -1,0 +1,26 @@
+<div id="content">
+    <div style="position: absolute; width: 250px; height: 250px; top: calc(50% - 125px); left: calc(50% - 125px); z-index: 10000;">
+        <div class="spinner-wrapper">
+        <div class="spinner-half-circle"></div>
+        <div class="spinner-background">
+            <div class="spinner-logo-wrapper">
+                <img src="./images/fruit-slice.png" alt="fruit-slice" class="spinner-logo" />
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./vs/loader.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/{{replJs}}.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    setTimeout(() => {
+        if (typeof window.monaco === 'undefined') {
+            const searchParams = new URL(window.location.href).searchParams;
+            searchParams.delete('v');
+            const queryString = searchParams.toString()
+            const location = queryString ? '/' : `?${queryString}`;
+            window.history.replaceState(null, null, location);
+            alert('Failed to load package. This is likely because webpack had some issues.');
+            window.location.reload();
+        }
+    }, 10000);
+</script>

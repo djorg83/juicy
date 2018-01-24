@@ -9,15 +9,16 @@ const Repl = require('./Repl');
 const Sidebar = require('./Sidebar');
 const Loading = require('./Loading');
 const MONACO_THEMES = require('../constants/monaco-themes');
+const queryParams = require('../utils/queryParams')();
 
 const headerHeight = 50;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
-const suffix = localStorage.getItem('repl-js-suffix');
-const configFile = suffix ? `repl-config-${suffix}` : 'repl-config';
+const version = queryParams.getRawParam('v');
+const configFile = version ? `repl-config-${version}` : 'repl-config';
+
 const {
-    replPageTitle,
     packageNames,
     packageAliases,
     packages,
@@ -25,7 +26,6 @@ const {
     packageVersions,
     definedThemes,
     hideHeader,
-    gaid,
 } = require(`../../dist/${configFile}`);
 
 const fullHeight = {
@@ -54,29 +54,13 @@ const makeThemeList = R.pipe(
 const monacoThemes = R.values(MONACO_THEMES);
 const themes = makeThemeList([monacoThemes, definedThemes]);
 const autocompleteSuggestions = autocomplete.getSuggestions();
-document.title = replPageTitle;
-
-if (gaid) {
-    const gaScript = document.createElement('script');
-    gaScript.setAttribute('src', `https://www.googletagmanager.com/gtag/js?id=${gaid}`);
-    gaScript.setAttribute('async', true);
-    gaScript.setAttribute('charset', 'utf-8');
-    document.body.appendChild(gaScript);
-
-    window.registerGA = () => {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(...args) { window.dataLayer.push(args); }
-        gtag('js', new Date());
-        gtag('config', window.gaid);
-    };
-}
 
 // expose globals
 packageNames.forEach((packageName) => {
     const aliases = packageAliases[packageName];
     const lib = packages[packageName];
     aliases.forEach((alias) => {
-    // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.log(`Adding alias window.${alias} for package ${packageName}`);
         window[alias] = lib;
     });
