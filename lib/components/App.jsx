@@ -9,13 +9,13 @@ const Repl = require('./Repl');
 const Sidebar = require('./Sidebar');
 const Loading = require('./Loading');
 const MONACO_THEMES = require('../constants/monaco-themes');
-const queryParams = require('../utils/queryParams')();
+const queryParams = require('../utils/queryParams');
 
 const headerHeight = 50;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
-const version = queryParams.getRawParam('v');
+const version = queryParams.get('v');
 const configFile = version ? `repl-config-${version}` : 'repl-config';
 
 const {
