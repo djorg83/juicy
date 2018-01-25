@@ -9,14 +9,12 @@ const Repl = require('./Repl');
 const Sidebar = require('./Sidebar');
 const Loading = require('./Loading');
 const MONACO_THEMES = require('../constants/monaco-themes');
-const queryParams = require('../utils/queryParams');
 
 const headerHeight = 50;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
-const version = queryParams.get('v');
-const configFile = version ? `repl-config-${version}` : 'repl-config';
+const configFile = window.jsVersion ? `repl-config-${window.jsVersion}` : 'repl-config';
 
 const {
     packageNames,
@@ -24,9 +22,11 @@ const {
     packages,
     packageMethods,
     packageVersions,
-    definedThemes,
     hideHeader,
 } = require(`../../dist/${configFile}`);
+
+// eslint-disable-next-line import/no-unresolved
+const definedThemes = require('../../dist/repl-themes.js');
 
 const fullHeight = {
     height: hideHeader ? '100%' : `calc(100% - ${headerHeight}px)`,

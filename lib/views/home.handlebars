@@ -10,7 +10,6 @@
     </div>
 </div>
 <script src="./vs/loader.js" type="text/javascript" charset="utf-8"></script>
-<script src="./js/{{replJs}}.js" type="text/javascript" charset="utf-8"></script>
 <script>
     setTimeout(() => {
         if (typeof window.monaco === 'undefined') {
@@ -23,4 +22,7 @@
             window.location.reload();
         }
     }, 10000);
+
+    window.jsVersion = '{{jsVersion}}';
 </script>
+<script src="./js/{{replJs}}.js" type="text/javascript" charset="utf-8"></script>

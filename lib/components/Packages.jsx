@@ -4,7 +4,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
 const FontAwesome = require('react-fontawesome');
-const addPackages = require('../utils/addPackages');
+const queryParams = require('../utils/queryParams');
 
 const PromptInput = ({
     value,
@@ -76,18 +76,22 @@ class Packages extends React.Component {
                 return packageName.toLowerCase() !== npmPackage;
             })
             .map((packageName) => {
-                const aliases = this.props.packageAliases[packageName].join(',');
+                const aliases = this.props.packageAliases[packageName].filter((alias) => {
+                    return alias !== packageName;
+                }).join(',');
+
                 const version = this.props.packageVersions[packageName];
-                return `${packageName}!!${aliases}!!${version}`;
+                return `${packageName}!${aliases}!${version}`;
             });
 
-        npmPackage += this.state.alias ? `!!${this.state.alias.trim()}` : '!!';
-        npmPackage += this.state.version ? `!!${this.state.version.trim()}` : '';
+        npmPackage += this.state.alias ? `!${this.state.alias.trim()}` : '!';
+        npmPackage += this.state.version ? `!${this.state.version.trim()}` : '';
 
         this.props.setLoading(true);
         this.hidePrompt();
-        return addPackages([...existingPackages, npmPackage])
-            .then(() => window.location.reload());
+
+        queryParams.set('packages', JSON.stringify([...existingPackages, npmPackage]));
+        window.location.reload();
     }
 
     confirmImportPackage() {
