@@ -14,7 +14,7 @@
     setTimeout(() => {
         if (typeof window.monaco === 'undefined') {
             const searchParams = new URL(window.location.href).searchParams;
-            searchParams.delete('v');
+            searchParams.delete('packages');
             const queryString = searchParams.toString()
             const location = queryString ? '/' : `?${queryString}`;
             window.history.replaceState(null, null, location);
