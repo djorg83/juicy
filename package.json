@@ -1,7 +1,7 @@
 {
   "name": "juicy-repl",
   "description": "An extensible JavaScript REPL",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "license": "UNLICENSED",
   "main": "./lib/app.js",
   "bin": {
