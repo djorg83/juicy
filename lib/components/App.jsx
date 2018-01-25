@@ -1,5 +1,3 @@
-
-
 const React = require('react');
 const autobind = require('react-autobind');
 const R = require('ramda');
@@ -14,8 +12,6 @@ const headerHeight = 50;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
-const configFile = window.jsVersion ? `repl-config-${window.jsVersion}` : 'repl-config';
-
 const {
     packageNames,
     packageAliases,
@@ -23,7 +19,7 @@ const {
     packageMethods,
     packageVersions,
     hideHeader,
-} = require(`../../dist/${configFile}`);
+} = window.JUICY_REPL_CONFIG;
 
 // eslint-disable-next-line import/no-unresolved
 const definedThemes = require('../../dist/repl-themes.js');

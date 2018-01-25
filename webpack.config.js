@@ -5,7 +5,7 @@ const absolutePath = (relativePath) => path.join(__dirname, relativePath);
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: absolutePath('./lib/entry.jsx'),
+    entry: absolutePath('./dist/entry.jsx'),
     output: {
         path: absolutePath('./public/js'),
         filename: 'repl.js',
@@ -14,7 +14,7 @@ module.exports = {
         rules: [
             {
                 test: /\.jsx?/,
-                include: /juicy(-repl)?[/\\]lib/,
+                include: /juicy(-repl)?[/\\]((lib)|(dist))/,
                 use: 'babel-loader',
             },
         ],
