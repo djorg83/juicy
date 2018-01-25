@@ -61,7 +61,7 @@ class Pins extends React.Component {
                     type="input"
                     showCancel
                     title="Save New Pin"
-                    style={{ outline: 'none', color: '#666' }}
+                    style={{ color: '#666' }}
                     onConfirm={this.onEnterPinName}
                     onCancel={this.hidePrompt}
                     confirmBtnText="Save Pin"
@@ -80,7 +80,7 @@ class Pins extends React.Component {
                     type="error"
                     showCancel
                     title="Are you sure?"
-                    style={{ outline: 'none', color: '#666' }}
+                    style={{ color: '#666' }}
                     onConfirm={() => this.removePin(name)}
                     onCancel={this.hidePrompt}
                     confirmBtnBsStyle="error"

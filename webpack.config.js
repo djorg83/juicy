@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 
 const absolutePath = (relativePath) => path.join(__dirname, relativePath);

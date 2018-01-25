@@ -13,13 +13,9 @@
 <script>
     setTimeout(() => {
         if (typeof window.monaco === 'undefined') {
-            const searchParams = new URL(window.location.href).searchParams;
-            searchParams.delete('packages');
-            const queryString = searchParams.toString()
-            const location = queryString ? '/' : `?${queryString}`;
-            window.history.replaceState(null, null, location);
+            console.log('Failed to initialize editor');
             alert('Failed to load package. This is likely because webpack had some issues.');
-            window.location.reload();
+            window.history.back();
         }
     }, 10000);
 

@@ -4,11 +4,11 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
 const FontAwesome = require('react-fontawesome');
-const queryParams = require('../utils/queryParams');
 
 const PromptInput = ({
     value,
     onChange,
+    onKeyDown,
     label,
     placeholder,
 }) => (
@@ -21,6 +21,7 @@ const PromptInput = ({
             value={value}
             placeholder={placeholder}
             onChange={onChange}
+            onKeyDown={onKeyDown}
         />
     </div>
 );
@@ -28,6 +29,7 @@ const PromptInput = ({
 PromptInput.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    onKeyDown: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
 };
@@ -55,6 +57,13 @@ class Packages extends React.Component {
         }), this.promptAddPackage);
     }
 
+    onInputKeyDown(e) {
+        if (e.keyCode === 13) {
+            this.confirmImportPackage();
+            e.stopPropagation();
+        }
+    }
+
     hidePrompt(next) {
         if (typeof next !== 'function') {
             // eslint-disable-next-line no-param-reassign
@@ -69,6 +78,9 @@ class Packages extends React.Component {
     }
 
     importPackage() {
+        this.props.setLoading(true);
+        this.hidePrompt();
+
         let npmPackage = this.state.newPackage.toLowerCase().trim();
 
         const existingPackages = Object.keys(this.props.packageAliases)
@@ -87,11 +99,14 @@ class Packages extends React.Component {
         npmPackage += this.state.alias ? `!${this.state.alias.trim()}` : '!';
         npmPackage += this.state.version ? `!${this.state.version.trim()}` : '';
 
-        this.props.setLoading(true);
-        this.hidePrompt();
+        const allPackages = [...existingPackages, npmPackage];
+        const allPackagesString = allPackages.join('|');
 
-        queryParams.set('packages', JSON.stringify([...existingPackages, npmPackage]));
-        window.location.reload();
+        const { searchParams } = new URL(window.location.href);
+        searchParams.delete('packages');
+        searchParams.append('packages', allPackagesString);
+
+        window.location = `${window.location.origin}?${searchParams.toString()}`;
     }
 
     confirmImportPackage() {
@@ -101,7 +116,7 @@ class Packages extends React.Component {
                     <SweetAlert
                         showCancel
                         title="Import New Package"
-                        style={{ outline: 'none', color: '#666' }}
+                        style={{ color: '#666' }}
                         onConfirm={this.importPackage}
                         onCancel={this.hidePrompt}
                         confirmBtnText="Import Now"
@@ -151,7 +166,7 @@ class Packages extends React.Component {
                         error
                         showCancel
                         title="Oops!"
-                        style={{ outline: 'none', color: '#666' }}
+                        style={{ color: '#666' }}
                         onConfirm={() => this.promptAddPackage(true)}
                         onCancel={this.hidePrompt}
                         confirmBtnText="Try again"
@@ -171,29 +186,35 @@ class Packages extends React.Component {
                     <SweetAlert
                         showCancel
                         title="Import New Package"
-                        style={{ outline: 'none', color: '#666' }}
+                        style={{ color: '#666' }}
                         onConfirm={this.confirmImportPackage}
                         onCancel={this.hidePrompt}
                         confirmBtnText="Continue"
                         cancelBtnText="Nope, just kidding"
+                        afterMount={() => {
+                            document.getElementById('Package Name').focus();
+                        }}
                     >
                         <div style={{ width: 442, textAlign: 'left' }}>
                             <PromptInput
                                 label="Package Name"
                                 placeholder="Package Name"
                                 value={this.state.newPackage}
+                                onKeyDown={this.onInputKeyDown}
                                 onChange={(e) => this.onChangePromptInput('newPackage', e.target.value)}
                             />
                             <PromptInput
                                 label="Aliases"
                                 placeholder="(optional, comma separated)"
                                 value={this.state.alias}
+                                onKeyDown={this.onInputKeyDown}
                                 onChange={(e) => this.onChangePromptInput('alias', e.target.value)}
                             />
                             <PromptInput
                                 label="Version"
                                 placeholder="(optional)"
                                 value={this.state.version}
+                                onKeyDown={this.onInputKeyDown}
                                 onChange={(e) => this.onChangePromptInput('version', e.target.value)}
                             />
                         </div>
