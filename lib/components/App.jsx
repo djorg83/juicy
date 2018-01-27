@@ -91,10 +91,12 @@ class App extends React.Component {
     }
 
     render() {
+        const { loading } = this.state;
+        const color = loading ? '#8ee600' : this.state.stringColor;
         return (
             <div style={{ height: '100%' }}>
-                {this.state.loading && <Loading color={this.state.stringColor} />}
-                {!hideHeader && <Nav color={this.state.stringColor} />}
+                {loading && <Loading color={color} />}
+                {!hideHeader && <Nav color={color} />}
                 <Repl
                     id={REPL_ID}
                     style={replStyle}
@@ -111,7 +113,7 @@ class App extends React.Component {
                     packageAliases={packageAliases}
                     setLoading={this.setLoading}
                     themes={themes}
-                    stringColor={this.state.stringColor}
+                    stringColor={color}
                     cache={this.state.cache}
                 />
             </div>
