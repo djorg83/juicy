@@ -5,6 +5,7 @@ const R = require('ramda');
 const Editor = require('./Editor');
 const beautify = require('../utils/beautify');
 const babelify = require('../utils/babelify');
+const queryParams = require('../utils/queryParams');
 const Rx = require('rxjs');
 
 const baseReplStyle = {
@@ -24,25 +25,25 @@ class Repl extends React.Component {
         super(props);
         autobind(this);
 
-        const queryParams = require('../utils/queryParams')(this.props.id);
-        const deprecated2 = queryParams.getRawParam('primary-snippet');
-        const deprecated1 = queryParams.getRawParam('snippet');
+        const wrappedQueryParams = require('../utils/wrappedQueryParams')(this.props.id);
+        const deprecated2 = queryParams.get('primary-snippet');
+        const deprecated1 = queryParams.get('snippet');
 
-        const inputValue = queryParams.getSnippet() || deprecated2 || deprecated1 || '';
+        const inputValue = wrappedQueryParams.getSnippet() || deprecated2 || deprecated1 || '';
 
-        queryParams.setSnippet(inputValue);
+        wrappedQueryParams.setSnippet(inputValue);
 
         // remove deprecated params
-        queryParams.removeRawParam('primary-snippet');
-        queryParams.removeRawParam('snippet');
+        queryParams.remove('primary-snippet');
+        queryParams.remove('snippet');
 
         // remove timestamp
-        queryParams.removeRawParam('t');
+        queryParams.remove('t');
 
         const autoRun = this.props.cache.getAutoRun() || true;
 
         this.state = {
-            queryParams,
+            wrappedQueryParams,
             inputValue,
             outputValue: null,
             hasChanged: true,
@@ -53,7 +54,7 @@ class Repl extends React.Component {
 
     componentDidMount() {
         this.startTimer();
-        this.startLoger();
+        this.startLogger();
     }
 
     onInputEmitValue(value) {
@@ -62,7 +63,7 @@ class Repl extends React.Component {
             this.setState(
                 () => ({ inputValue: safeValue, hasChanged: true }),
                 () => {
-                    this.state.queryParams.setSnippet(this.state.inputValue);
+                    this.state.wrappedQueryParams.setSnippet(this.state.inputValue);
                     this.startTimer();
                 }
             );
@@ -72,7 +73,7 @@ class Repl extends React.Component {
     }
 
     clearInput() {
-        this.state.queryParams.setSnippet('');
+        this.state.wrappedQueryParams.setSnippet('');
         this.setState(() => ({ inputValue: '', outputValue: '' }));
     }
 
@@ -104,18 +105,23 @@ class Repl extends React.Component {
         );
     }
 
-    startLoger() {
+    startLogger() {
         this.logger$ = new Rx.Subject();
         this.key = 0;
 
-        this.logger$.filter(({ key }) => key === this.key).subscribe(({ message }) => {
-            this.setState(({ outputValue }) => ({
-                outputValue: `${outputValue === null ? '' : `${outputValue}\n`}${message}`,
-            }));
-        });
+        this.logger$
+            .filter(({ key }) => key === this.key)
+            .subscribe(({ message }) => {
+                this.setState(({ outputValue }) => {
+                    const currentValue = outputValue == null ? '' : `${outputValue}\n`;
+                    return {
+                        outputValue: `${currentValue}${message}`,
+                    };
+                });
+            });
     }
 
-    clearLog() {
+    clearOutput() {
         this.setState(() => ({
             outputValue: null,
         }));
@@ -142,13 +148,12 @@ class Repl extends React.Component {
                 () => ({ hasChanged: false }),
                 () => babelify(this.state.inputValue)
                     .then((babelOutput) => new Promise((resolve) => {
-                        this.clearLog();
+                        this.clearOutput();
 
                         // eslint-disable-next-line no-eval
                         return resolve(R.tryCatch((output) => eval(output), R.prop('message'))(babelOutput));
                     }))
                     .then(R.when(R.is(String), R.replace('use strict', '')))
-                    .then(beautify)
                     .then(log)
             );
         }

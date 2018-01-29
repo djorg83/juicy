@@ -182,12 +182,20 @@ If true, then the header of the REPL will be hidden.
 
 ----
 
+## gaid
+Default: `null`
+
+Google Analytics ID. If set, then google analytics script is added to the page.
+
+----
+
 ## Command line args
 - `--port 80`
 - `--detach false`
 - `--hideHeader true`
 - `--processTitle "custom-repl"`
 - `--replPageTitle "My Custom REPL"`
+- `--gaid "UA-112996224-1"`
 
 ## Author
 

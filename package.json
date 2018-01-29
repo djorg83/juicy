@@ -1,7 +1,7 @@
 {
   "name": "juicy-repl",
   "description": "An extensible JavaScript REPL",
-  "version": "0.0.21",
+  "version": "0.0.31",
   "license": "UNLICENSED",
   "main": "./lib/app.js",
   "bin": {
@@ -32,6 +32,7 @@
     "copy-webpack-plugin": "4.3.1",
     "daemonize-process": "1.0.5",
     "express": "4.16.2",
+    "express-handlebars": "3.0.0",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
     "gulp-rename": "1.2.2",
@@ -42,12 +43,13 @@
     "ramda": "0.25.0",
     "react": "16.2.0",
     "react-autobind": "1.0.6",
-    "react-bootstrap-sweetalert": "4.1.0",
+    "react-bootstrap-sweetalert": "4.2.3",
     "react-dom": "16.2.0",
     "react-fontawesome": "1.6.1",
     "react-monaco-editor": "0.13.0",
     "rxjs": "^5.5.6",
     "shelljs": "0.7.8",
+    "shorthash": "0.0.2",
     "webpack": "3.10.0"
   },
   "devDependencies": {
@@ -60,10 +62,8 @@
     "husky": "0.14.3",
     "joi": "13.1.1",
     "moment": "2.20.1",
-    "mongodb": "3.0.1",
     "node-readme": "0.1.9",
     "nodemon": "1.14.8",
-    "swal": "0.1.0",
     "uuid": "3.2.1"
   },
   "homepage": "https://github.com/djorg83/juicy",

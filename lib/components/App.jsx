@@ -1,5 +1,3 @@
-
-
 const React = require('react');
 const autobind = require('react-autobind');
 const R = require('ramda');
@@ -14,18 +12,17 @@ const headerHeight = 50;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
-const suffix = localStorage.getItem('repl-js-suffix');
-const configFile = suffix ? `repl-config-${suffix}` : 'repl-config';
 const {
-    replPageTitle,
     packageNames,
     packageAliases,
     packages,
     packageMethods,
     packageVersions,
-    definedThemes,
     hideHeader,
-} = require(`../../dist/${configFile}`);
+} = window.JUICY_REPL_CONFIG;
+
+// eslint-disable-next-line import/no-unresolved
+const definedThemes = require('../../dist/repl-themes.js');
 
 const fullHeight = {
     height: hideHeader ? '100%' : `calc(100% - ${headerHeight}px)`,
@@ -53,14 +50,13 @@ const makeThemeList = R.pipe(
 const monacoThemes = R.values(MONACO_THEMES);
 const themes = makeThemeList([monacoThemes, definedThemes]);
 const autocompleteSuggestions = autocomplete.getSuggestions();
-document.title = replPageTitle;
 
 // expose globals
 packageNames.forEach((packageName) => {
     const aliases = packageAliases[packageName];
     const lib = packages[packageName];
     aliases.forEach((alias) => {
-    // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.log(`Adding alias window.${alias} for package ${packageName}`);
         window[alias] = lib;
     });
@@ -95,10 +91,12 @@ class App extends React.Component {
     }
 
     render() {
+        const { loading } = this.state;
+        const color = loading ? '#8ee600' : this.state.stringColor;
         return (
             <div style={{ height: '100%' }}>
-                {this.state.loading && <Loading color={this.state.stringColor} />}
-                {!hideHeader && <Nav color={this.state.stringColor} />}
+                {loading && <Loading color={color} />}
+                {!hideHeader && <Nav color={color} />}
                 <Repl
                     id={REPL_ID}
                     style={replStyle}
@@ -115,7 +113,7 @@ class App extends React.Component {
                     packageAliases={packageAliases}
                     setLoading={this.setLoading}
                     themes={themes}
-                    stringColor={this.state.stringColor}
+                    stringColor={color}
                     cache={this.state.cache}
                 />
             </div>

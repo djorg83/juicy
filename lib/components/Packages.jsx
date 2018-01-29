@@ -1,12 +1,42 @@
-
-
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 const React = require('react');
 const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
 const FontAwesome = require('react-fontawesome');
-const addPackages = require('../utils/addPackages');
+
+const PromptInput = ({
+    value,
+    onChange,
+    onKeyDown,
+    label,
+    placeholder,
+}) => (
+    <div className="form-group">
+        <label style={{ fontSize: 15 }} htmlFor={label}>{label}</label>
+        <input
+            id={label}
+            type="text"
+            className="form-control"
+            value={value}
+            placeholder={placeholder}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+        />
+    </div>
+);
+
+PromptInput.propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    onKeyDown: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+};
+
+PromptInput.defaultProps = {
+    value: '',
+};
 
 class Packages extends React.Component {
     constructor(props) {
@@ -15,124 +45,189 @@ class Packages extends React.Component {
 
         this.state = {
             prompt: null,
-            newPackage: null,
-            alias: null,
+            newPackage: '',
+            alias: '',
+            version: '',
         };
     }
 
-    onSelectAlias(alias) {
+    onChangePromptInput(fieldName, value) {
         this.setState(() => ({
-            alias,
-            prompt: null,
-        }), this.confirmImportPackage);
+            [fieldName]: value,
+        }), this.promptAddPackage);
     }
 
-    onSelectPackage(newPackage) {
-        this.setState(() => ({
-            newPackage,
-            prompt: null,
-        }), this.promptAlias);
+    onInputKeyDown(e) {
+        if (e.keyCode === 13) {
+            this.confirmImportPackage();
+            e.stopPropagation();
+        }
     }
 
-    hidePrompt() {
-        this.setState(() => ({ prompt: null, newPackage: null, alias: null }));
+    hidePrompt(next) {
+        if (typeof next !== 'function') {
+            // eslint-disable-next-line no-param-reassign
+            next = () => {};
+        }
+        this.setState(() => ({
+            prompt: null,
+            newPackage: '',
+            alias: '',
+            version: '',
+        }), next);
     }
 
     importPackage() {
-        let npmPackage = this.state.newPackage;
-        if (this.state.alias) {
-            npmPackage += `(${this.state.alias})`;
-        }
-        const packages = Object.keys(this.props.packageAliases).map((packageName) => {
-            const alias = this.props.packageAliases[packageName][0];
-            return `${packageName}(${alias})`;
-        });
-
         this.props.setLoading(true);
         this.hidePrompt();
-        return addPackages([...packages, npmPackage].join(','))
-            .then(() => window.location.reload());
+
+        let npmPackage = this.state.newPackage.toLowerCase().trim();
+
+        const existingPackages = Object.keys(this.props.packageAliases)
+            .filter((packageName) => {
+                return packageName.toLowerCase() !== npmPackage;
+            })
+            .map((packageName) => {
+                const aliases = this.props.packageAliases[packageName].filter((alias) => {
+                    return alias !== packageName;
+                }).join(',');
+
+                const version = this.props.packageVersions[packageName];
+                return `${packageName}!${aliases}!${version}`;
+            });
+
+        npmPackage += this.state.alias ? `!${this.state.alias.trim()}` : '!';
+        npmPackage += this.state.version ? `!${this.state.version.trim()}` : '';
+
+        const allPackages = [...existingPackages, npmPackage];
+        const allPackagesString = allPackages.join('|');
+
+        const { searchParams } = new URL(window.location.href);
+        searchParams.delete('packages');
+        searchParams.append('packages', allPackagesString);
+
+        window.location = `${window.location.origin}?${searchParams.toString()}`;
     }
 
     confirmImportPackage() {
-        this.setState(() => ({
-            prompt: (
-                <SweetAlert
-                    showCancel
-                    title="Import New Package"
-                    style={{ outline: 'none', color: '#666' }}
-                    onConfirm={this.importPackage}
-                    onCancel={this.hidePrompt}
-                    confirmBtnText="Import Now"
-                    cancelBtnText="Nope, just kidding"
-                >
-                    <div style={{ fontSize: 14, marginTop: 20 }}>
-                        You wish to import&nbsp;
-                        <span style={{ color: '#ff5d38', fontWeight: 'bold' }}>
-                            {this.state.newPackage}
-                        </span>
-                        {this.state.alias && (
-                            <span>
-                                &nbsp;with an alias of&nbsp;
-                                <span style={{ color: '#ff5d38', fontWeight: 'bold' }}>
-                                    {this.state.alias}
-                                </span>
-                            </span>
-                        )}
-                        .
-                    </div>
-
-                    <div style={{
-                        color: '#e8bb00',
-                        fontWeight: 'bold',
-                        marginTop: 15,
-                        fontSize: 20,
-                    }}
+        if (this.state.newPackage) {
+            this.setState(() => ({
+                prompt: (
+                    <SweetAlert
+                        showCancel
+                        title="Import New Package"
+                        style={{ color: '#666' }}
+                        onConfirm={this.importPackage}
+                        onCancel={this.hidePrompt}
+                        confirmBtnText="Import Now"
+                        cancelBtnText="Nope, just kidding"
                     >
-                        <FontAwesome name="exclamation-triangle" />&nbsp;This can take up to one minute.
-                    </div>
-                </SweetAlert>
-            ),
-        }));
+                        <div style={{ fontSize: 14, marginTop: 20 }}>
+                            You wish to import&nbsp;
+                            <span style={{ color: '#ff5d38', fontWeight: 'bold' }}>
+                                {this.state.newPackage}
+                            </span>
+                            {this.state.version && (
+                                <span>
+                                    &nbsp;version&nbsp;
+                                    <span style={{ color: '#ff5d38', fontWeight: 'bold' }}>
+                                        {this.state.version}
+                                    </span>
+                                </span>
+                            )}
+                            {this.state.alias && (
+                                <span>
+                                    &nbsp;with aliases&nbsp;(
+                                    <span style={{ color: '#ff5d38', fontWeight: 'bold' }}>
+                                        {this.state.alias.split(',').join(', ')}
+                                    </span>
+                                    )
+                                </span>
+                            )}
+                            .
+                        </div>
+
+                        <div style={{
+                            color: '#e8bb00',
+                            fontWeight: 'bold',
+                            marginTop: 15,
+                            fontSize: 20,
+                        }}
+                        >
+                            <FontAwesome name="exclamation-triangle" />&nbsp;This can take up to one minute.
+                        </div>
+                    </SweetAlert>
+                ),
+            }));
+        } else {
+            this.setState(() => ({
+                prompt: (
+                    <SweetAlert
+                        error
+                        showCancel
+                        title="Oops!"
+                        style={{ color: '#666' }}
+                        onConfirm={() => this.promptAddPackage(true)}
+                        onCancel={this.hidePrompt}
+                        confirmBtnText="Try again"
+                        cancelBtnText="Get me out of here"
+                    >
+                        {'You didn\'t enter a package name.'}
+                    </SweetAlert>
+                ),
+            }));
+        }
     }
 
-    promptAlias() {
-        this.setState(() => ({
-            prompt: (
-                <SweetAlert
-                    type="input"
-                    required={false}
-                    showCancel
-                    title="Import New Package"
-                    style={{ outline: 'none', color: '#666' }}
-                    onConfirm={this.onSelectAlias}
-                    onCancel={this.hidePrompt}
-                    confirmBtnText="Continue"
-                    cancelBtnText="Nope, just kidding"
-                >
-                    Enter alias for the package. (optional)
-                </SweetAlert>
-            ),
-        }));
-    }
+    promptAddPackage(hide = false) {
+        const show = () => {
+            this.setState(() => ({
+                prompt: (
+                    <SweetAlert
+                        showCancel
+                        title="Import New Package"
+                        style={{ color: '#666' }}
+                        onConfirm={this.confirmImportPackage}
+                        onCancel={this.hidePrompt}
+                        confirmBtnText="Continue"
+                        cancelBtnText="Nope, just kidding"
+                        afterMount={() => {
+                            document.getElementById('Package Name').focus();
+                        }}
+                    >
+                        <div style={{ width: 442, textAlign: 'left' }}>
+                            <PromptInput
+                                label="Package Name"
+                                placeholder="Package Name"
+                                value={this.state.newPackage}
+                                onKeyDown={this.onInputKeyDown}
+                                onChange={(e) => this.onChangePromptInput('newPackage', e.target.value)}
+                            />
+                            <PromptInput
+                                label="Aliases"
+                                placeholder="(optional, comma separated)"
+                                value={this.state.alias}
+                                onKeyDown={this.onInputKeyDown}
+                                onChange={(e) => this.onChangePromptInput('alias', e.target.value)}
+                            />
+                            <PromptInput
+                                label="Version"
+                                placeholder="(optional)"
+                                value={this.state.version}
+                                onKeyDown={this.onInputKeyDown}
+                                onChange={(e) => this.onChangePromptInput('version', e.target.value)}
+                            />
+                        </div>
+                    </SweetAlert>
+                ),
+            }));
+        };
 
-    promptAddPackage() {
-        this.setState(() => ({
-            prompt: (
-                <SweetAlert
-                    type="input"
-                    showCancel
-                    title="Import New Package"
-                    style={{ outline: 'none', color: '#666' }}
-                    onConfirm={this.onSelectPackage}
-                    onCancel={this.hidePrompt}
-                    confirmBtnText="Continue"
-                    cancelBtnText="Nope, just kidding"
-                >
-                    Which npm package?
-                </SweetAlert>
-            ),
-        }));
+        if (hide) {
+            this.hidePrompt(show);
+        } else {
+            show();
+        }
     }
 
     render() {
