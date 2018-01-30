@@ -23,6 +23,7 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         autobind(this);
+        window.addEventListener('resize', this.resizeEditor)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,6 +49,8 @@ class Editor extends React.Component {
 
     editorDidMount(editor, monaco) {
         this._monaco = monaco;
+        this._editor = editor;
+
         if (this.props.editable && this.props.autocompleteSuggestions) {
             monaco.languages.registerCompletionItemProvider('javascript', {
                 provideCompletionItems: () => this.props.autocompleteSuggestions.map((suggestion) => ({
@@ -57,6 +60,12 @@ class Editor extends React.Component {
             });
         }
         this.setTheme(this.props.theme);
+    }
+
+    resizeEditor() {
+        if (this._editor) {
+            this._editor.layout();
+        }
     }
 
     render() {
