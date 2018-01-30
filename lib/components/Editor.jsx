@@ -23,7 +23,7 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         autobind(this);
-        window.addEventListener('resize', this.resizeEditor)
+        window.addEventListener('resize', this.resizeEditor, { passive: true });
     }
 
     componentWillReceiveProps(nextProps) {
