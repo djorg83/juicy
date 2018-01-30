@@ -39,6 +39,7 @@
     "gulp-replace": "0.6.1",
     "latest-version": "3.1.0",
     "lodash": "4.17.4",
+    "lossless-text-compression": "^1.0.2",
     "lzutf8": "^0.4.7",
     "prop-types": "15.6.0",
     "ramda": "0.25.0",
@@ -77,6 +78,10 @@
     {
       "name": "Daniel Jorgensen",
       "email": "djorg386@gmail.com"
+    },
+    {
+      "name": "Ricardo Spear",
+      "email": "spear.ricardo@gmail.com"
     }
   ]
 }
