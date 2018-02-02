@@ -5,9 +5,9 @@ const absolutePath = (relativePath) => path.join(__dirname, relativePath);
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: absolutePath('./dist/entry.jsx'),
+    entry: absolutePath('../dist/entry.jsx'),
     output: {
-        path: absolutePath('./public/js'),
+        path: absolutePath('../public/js'),
         filename: 'repl.js',
     },
     module: {
@@ -20,7 +20,7 @@ module.exports = {
         ],
     },
     resolveLoader: {
-        modules: [absolutePath('./node_modules')],
+        modules: [absolutePath('../node_modules')],
     },
     resolve: {
         extensions: ['.js', '.jsx'],
@@ -32,7 +32,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             {
-                from: absolutePath('./node_modules/monaco-editor'),
+                from: absolutePath('../node_modules/monaco-editor'),
                 to: 'vs',
             },
         ]),

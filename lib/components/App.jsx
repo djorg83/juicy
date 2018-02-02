@@ -14,12 +14,21 @@ const REPL_ID = 'repl';
 
 const {
     packageNames,
-    packageAliases,
+    aliases: packageAliases,
     packages,
     packageMethods,
     packageVersions,
     hideHeader,
+    headerLogoFilename,
+    headerTitle,
+    headerSubtitle,
+    headerColor,
+    headerFontColor,
+    spinnerFilename,
+    spinnerBgColor,
 } = window.JUICY_REPL_CONFIG;
+
+console.log('config', window.JUICY_REPL_CONFIG);
 
 // eslint-disable-next-line import/no-unresolved
 const definedThemes = require('../../dist/repl-themes.js');
@@ -92,11 +101,26 @@ class App extends React.Component {
 
     render() {
         const { loading } = this.state;
-        const color = loading ? '#8ee600' : this.state.stringColor;
+        const color = loading ? headerColor : this.state.stringColor;
         return (
             <div style={{ height: '100%' }}>
-                {loading && <Loading color={color} />}
-                {!hideHeader && <Nav color={color} />}
+                {loading && (
+                    <Loading
+                        color={color}
+                        spinnerFilename={spinnerFilename}
+                        spinnerBgColor={spinnerBgColor}
+                    />
+                )}
+                {!hideHeader && (
+                    <Nav
+                        color={color}
+                        headerColor={headerColor || undefined}
+                        headerLogoFilename={headerLogoFilename || undefined}
+                        headerTitle={headerTitle || undefined}
+                        headerSubtitle={headerSubtitle || undefined}
+                        headerFontColor={headerFontColor || undefined}
+                    />
+                )}
                 <Repl
                     id={REPL_ID}
                     style={replStyle}

@@ -1,0 +1,9 @@
+{
+    "verbose": false,
+    "watch": [
+        "bin/generateReadme.js",
+        "config/readmeSnippets.js",
+        "config/options.json"
+    ],
+    "ext": "js json"
+}

@@ -12,12 +12,13 @@
     "dev": "yarn watch",
     "precommit": "yarn lint && yarn readme && git add README.md",
     "lint": "eslint --fix . --ext .js,.jsx lib",
-    "readme": "node-readme",
+    "readme": "node ./bin/generateReadme.js",
     "version": "yarn readme && git add README.md",
     "postversion": "git push && git push --tags && npm publish",
-    "watch-app": "nodemon --config ./nodemon.app.json ./bin/juicy.js",
-    "watch-webpack": "nodemon --config ./nodemon.webpack.json ./lib/rebuildWebpack.js",
-    "watch": "concurrently \"yarn watch-app\" \"yarn watch-webpack\""
+    "watch-app": "nodemon --config ./config/nodemon/app.json ./bin/juicy.js",
+    "watch-webpack": "nodemon --config ./config/nodemon/webpack.json ./lib/rebuildWebpack.js",
+    "watch-readme": "nodemon --config ./config/nodemon/readme.json ./bin/generateReadme.js",
+    "watch": "concurrently \"yarn watch-app\" \"yarn watch-webpack\" \"yarn watch-readme\""
   },
   "dependencies": {
     "args": "3.0.8",
@@ -63,7 +64,6 @@
     "husky": "0.14.3",
     "joi": "13.1.1",
     "moment": "2.20.1",
-    "node-readme": "0.1.9",
     "nodemon": "1.14.8",
     "uuid": "3.2.1"
   },

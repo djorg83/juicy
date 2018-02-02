@@ -1,0 +1,137 @@
+[
+    {
+      "name": "packages",
+      "description": "A list of npm packages to include when building the REPL.",
+      "defaultValue": [
+        "ramda",
+        "joi",
+        "lodash",
+        "bluebird",
+        "moment",
+        "uuid"
+      ],
+      "type": "Array<String>"
+    },
+    {
+      "name": "aliases",
+      "description": "Specify one or more aliases to expose as global variables for the packages.",
+      "defaultValue": {
+        "ramda": [
+          "R",
+          "Ramda"
+        ],
+        "lodash": [
+          "_"
+        ],
+        "bluebird": [
+          "Promise"
+        ]
+      },
+      "type": "Object<String, Array<String>>"
+    },
+    {
+      "name": "configPath",
+      "description": "Absolute path to config file.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'~/REPL_CONFIG.json'"
+    },
+    {
+      "name": "port",
+      "description": "The port number the REPL server will be exposed on.",
+      "defaultValue": 3000,
+      "type": "Number",
+      "cliExample": "80"
+    },
+    {
+      "name": "detach",
+      "description": "If true, then the REPL server will detach into a child process and allow the main process to exit. Otheriwse the main process will suspend while the REPL server is running. It is suggested to set `detach` to `false` if using `nohup` or a process manager such as `forever` or `pm2`.",
+      "defaultValue": true,
+      "type": "Boolean",
+      "cliExample": "false"
+    },
+    {
+      "name": "processTitle",
+      "description": "The `process.title` for the REPL server process.",
+      "defaultValue": "juicy-repl",
+      "type": "String",
+      "cliExample": "'my-custom-repl'"
+    },
+    {
+      "name": "replPageTitle",
+      "description": "The `document.title` for the REPL browser app.",
+      "defaultValue": "Juicy REPL",
+      "type": "String",
+      "cliExample": "'My REPL'"
+    },
+    {
+      "name": "gaid",
+      "description": "Google Analytics ID. If set, then google analytics script is added to the page.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'UA-112996224-1'"
+    },
+    {
+      "name": "hideHeader",
+      "description": "If true, then the header of the REPL will be hidden.",
+      "defaultValue": false,
+      "type": "Boolean",
+      "cliExample": "true"
+    },
+    {
+      "name": "spinnerPath",
+      "description": "Set to absolute path of image to loading spinner.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'/Users/myuser/images/spinner.gif'"
+    },
+    {
+      "name": "spinnerBgColor",
+      "description": "If set, then the spinner will have a circular background filled with this color",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'#FFFFFF'"
+    },
+    {
+      "name": "faviconPath",
+      "description": "Set to absolute path of image to override the favicon.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'/Users/myuser/images/favicon.ico'"
+    },
+    {
+      "name": "headerLogoPath",
+      "description": "Set to absolute path of image to override logo in header.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'/Users/myuser/images/my-repl-logo.png'"
+    },
+    {
+      "name": "headerTitle",
+      "description": "Overrides the title in the header. Use 'none' to hide the title.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'My REPL'"
+    },
+    {
+      "name": "headerSubtitle",
+      "description": "The subtitle in the header. Use 'none' to hide the subtitle.",
+      "defaultValue": "A JavaScript REPL that feels like an IDE",
+      "type": "String",
+      "cliExample": "'powered by Juicy'"
+    },
+    {
+      "name": "headerColor",
+      "description": "If set, overrides the backgorund color of the header.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'#FF0000'"
+    },
+    {
+      "name": "headerFontColor",
+      "description": "If set, overrides the font color of the header.",
+      "defaultValue": null,
+      "type": "String",
+      "cliExample": "'#FFFFFF'"
+    }
+  ]
