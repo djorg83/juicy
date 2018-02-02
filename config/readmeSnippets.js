@@ -26,7 +26,7 @@ const asArray = R.when(R.pipe(R.is(Array), R.not), R.of);
 
 const jsonToString = (json) => JSON.stringify(json, null, 4).replace(/"(.*)":/g, '$1:').replace(/"/g, "'");
 
-const imageLink = ({ label, imgUrl, link }) => `[![${label}](${imgUrl})](${link}})`;
+const imageLink = ({ label, imgUrl, link }) => `[![${label}](${imgUrl})](${link})`;
 
 const packageName = `# ${pkg.name}`;
 const description = `${pkg.description}`;

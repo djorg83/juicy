@@ -2,25 +2,25 @@
 
 An extensible JavaScript REPL
 
-[![NPM](https://nodei.co/npm/juicy-repl.png?downloads=true&stars=true)](https://nodei.co/npm/juicy-repl/})
+[![NPM](https://nodei.co/npm/juicy-repl.png?downloads=true&stars=true)](https://nodei.co/npm/juicy-repl/)
 
-[![NPM version](undefined)](https://www.npmjs.com/package/juicy-repl})
-[![Downloads](undefined)](https://www.npmjs.com/package/juicy-repl})
-[![David](undefined)](https://github.com/djorg83/juicy})
-[![devDependencies Status](undefined)](https://david-dm.org/djorg83/juicy?type=dev})
-[![GitHub issues](undefined)](https://github.com/djorg83/juicy})
-[![license](undefined)](https://github.com/djorg83/juicy})
-[![GitHub stars](undefined)](https://github.com/djorg83/juicy})
-[![Built with love](undefined)](https://img.shields.io/badge/built%20with-love-ff69b4.svg})
+[![NPM version](undefined)](https://www.npmjs.com/package/juicy-repl)
+[![Downloads](undefined)](https://www.npmjs.com/package/juicy-repl)
+[![David](undefined)](https://github.com/djorg83/juicy)
+[![devDependencies Status](undefined)](https://david-dm.org/djorg83/juicy?type=dev)
+[![GitHub issues](undefined)](https://github.com/djorg83/juicy)
+[![license](undefined)](https://github.com/djorg83/juicy)
+[![GitHub stars](undefined)](https://github.com/djorg83/juicy)
+[![Built with love](undefined)](https://img.shields.io/badge/built%20with-love-ff69b4.svg)
 
-[![Powered by NodeJS](undefined)](https://nodejs.org/en/})
-[![Powered by express](undefined)](https://expressjs.com/})
-[![Powered by Monaco](undefined)](https://microsoft.github.io/monaco-editor/})
-[![Powered by Rainglow](undefined)](https://rainglow.io/})
-[![Powered by react](undefined)](https://reactjs.org/})
-[![Powered by webpack](undefined)](https://webpack.js.org/})
-[![Powered by babel](undefined)](https://babeljs.io/})
-[![Powered by gulp](undefined)](https://gulpjs.com/})
+[![Powered by NodeJS](undefined)](https://nodejs.org/en/)
+[![Powered by express](undefined)](https://expressjs.com/)
+[![Powered by Monaco](undefined)](https://microsoft.github.io/monaco-editor/)
+[![Powered by Rainglow](undefined)](https://rainglow.io/)
+[![Powered by react](undefined)](https://reactjs.org/)
+[![Powered by webpack](undefined)](https://webpack.js.org/)
+[![Powered by babel](undefined)](https://babeljs.io/)
+[![Powered by gulp](undefined)](https://gulpjs.com/)
 
 
 # Table Of Contents
