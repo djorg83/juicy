@@ -13,6 +13,6 @@ const items = [
 
 module.exports = items.map(({ label, link }) => ({
     label: `Powered by ${label}`,
-    url: `${shieldsIO}/badge/powered%20by-${label}-yellowgreen.svg`,
+    imgUrl: `${shieldsIO}/badge/powered%20by-${label}-yellowgreen.svg`,
     link,
 }));
