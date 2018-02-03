@@ -6,7 +6,7 @@ const PropTypes = require('prop-types');
 const JuicyLogo = require('./JuicyLogo');
 const JuicySpinner = require('./JuicySpinner');
 
-class Nav extends React.Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
         autobind(this);
@@ -119,7 +119,7 @@ class Nav extends React.Component {
     }
 }
 
-Nav.propTypes = {
+Header.propTypes = {
     color: PropTypes.string.isRequired,
     headerColor: PropTypes.string,
     headerFontColor: PropTypes.string,
@@ -128,7 +128,7 @@ Nav.propTypes = {
     headerSubtitle: PropTypes.string,
 };
 
-Nav.defaultProps = {
+Header.defaultProps = {
     headerColor: null,
     headerLogoFilename: null,
     headerTitle: null,
@@ -136,4 +136,4 @@ Nav.defaultProps = {
     headerFontColor: '#333',
 };
 
-module.exports = Nav;
+module.exports = Header;

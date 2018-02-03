@@ -2,13 +2,15 @@ const React = require('react');
 const autobind = require('react-autobind');
 const R = require('ramda');
 const _ = require('lodash');
-const Nav = require('./Nav');
+const Header = require('./Header');
+const Footer = require('./Footer');
 const Repl = require('./Repl');
 const Sidebar = require('./Sidebar');
 const Loading = require('./Loading');
 const MONACO_THEMES = require('../constants/monaco-themes');
 
 const headerHeight = 50;
+const footerHeight = 20;
 const sidebarWidth = 200;
 const REPL_ID = 'repl';
 
@@ -28,13 +30,13 @@ const {
     spinnerBgColor,
 } = window.JUICY_REPL_CONFIG;
 
-console.log('config', window.JUICY_REPL_CONFIG);
-
 // eslint-disable-next-line import/no-unresolved
 const definedThemes = require('../../dist/repl-themes.js');
 
+const headerFooterHeight = hideHeader ? footerHeight : headerHeight + footerHeight;
+
 const fullHeight = {
-    height: hideHeader ? '100%' : `calc(100% - ${headerHeight}px)`,
+    height: `calc(100% - ${headerFooterHeight}px)`,
     position: 'relative',
     top: hideHeader ? 0 : `${headerHeight}px`,
 };
@@ -112,7 +114,7 @@ class App extends React.Component {
                     />
                 )}
                 {!hideHeader && (
-                    <Nav
+                    <Header
                         color={color}
                         headerColor={headerColor || undefined}
                         headerLogoFilename={headerLogoFilename || undefined}
@@ -140,6 +142,7 @@ class App extends React.Component {
                     stringColor={color}
                     cache={this.state.cache}
                 />
+                <Footer />
             </div>
         );
     }

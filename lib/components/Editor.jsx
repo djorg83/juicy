@@ -72,21 +72,23 @@ class Editor extends React.Component {
         return (
             <div style={Object.assign({}, baseEditorStyle, this.props.style)}>
                 <EditorHeader {...this.props} />
-                <MonacoEditor
-                    language="javascript"
-                    theme={this.props.theme}
-                    value={this.props.value}
-                    options={{
-                        selectOnLineNumbers: true,
-                        readOnly: !this.props.editable,
-                        rulers: this.props.editable ? [80] : [],
-                        minimap: {
-                            enabled: false,
-                        },
-                    }}
-                    onChange={this.props.onEditorEmitValue}
-                    editorDidMount={this.editorDidMount}
-                />
+                <div style={{ height: 'calc(100% - 33px)' }}>
+                    <MonacoEditor
+                        language="javascript"
+                        theme={this.props.theme}
+                        value={this.props.value}
+                        options={{
+                            selectOnLineNumbers: true,
+                            readOnly: !this.props.editable,
+                            rulers: this.props.editable ? [80] : [],
+                            minimap: {
+                                enabled: false,
+                            },
+                        }}
+                        onChange={this.props.onEditorEmitValue}
+                        editorDidMount={this.editorDidMount}
+                    />
+                </div>
             </div>
         );
     }
