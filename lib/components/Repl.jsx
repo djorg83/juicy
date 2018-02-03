@@ -151,7 +151,7 @@ class Repl extends React.Component {
                     .then((babelOutput) => new Promise((resolve) => {
                         this.clearOutput();
 
-                        return resolve(evaluate(babelOutput));
+                        return resolve(evaluate(babelOutput, console));
                     }))
                     .then(R.when(R.is(String), R.replace('use strict', '')))
                     .then(log)
