@@ -6,6 +6,7 @@ const Editor = require('./Editor');
 const beautify = require('../utils/beautify');
 const babelify = require('../utils/babelify');
 const queryParams = require('../utils/queryParams');
+const evaluate = require('../utils/evaluate');
 const Rx = require('rxjs');
 
 const baseReplStyle = {
@@ -150,8 +151,7 @@ class Repl extends React.Component {
                     .then((babelOutput) => new Promise((resolve) => {
                         this.clearOutput();
 
-                        // eslint-disable-next-line no-eval
-                        return resolve(R.tryCatch((output) => eval(output), R.prop('message'))(babelOutput));
+                        return resolve(evaluate(babelOutput));
                     }))
                     .then(R.when(R.is(String), R.replace('use strict', '')))
                     .then(log)

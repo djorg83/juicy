@@ -3,7 +3,6 @@
     "watch": [
         "lib/app/*.js",
         "lib/app/**/*.js",
-        "lib/app.js",
         "bin/juicy.js",
         "package.json"
     ],

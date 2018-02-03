@@ -3,7 +3,7 @@
   "description": "An extensible JavaScript REPL",
   "version": "0.1.4",
   "license": "UNLICENSED",
-  "main": "./lib/app.js",
+  "main": "./lib/app/start.js",
   "bin": {
     "juicy": "./bin/juicy.js"
   },
@@ -16,7 +16,7 @@
     "version": "yarn readme && git add README.md",
     "postversion": "git push && git push --tags && npm publish",
     "watch-app": "nodemon --config ./config/nodemon/app.json ./bin/juicy.js",
-    "watch-webpack": "nodemon --config ./config/nodemon/webpack.json ./lib/rebuildWebpack.js",
+    "watch-webpack": "nodemon --config ./config/nodemon/webpack.json ./lib/app/rebuildWebpack.js",
     "watch-readme": "nodemon --config ./config/nodemon/readme.json ./bin/generateReadme.js",
     "watch": "concurrently \"yarn watch-app\" \"yarn watch-webpack\" \"yarn watch-readme\""
   },
