@@ -8,6 +8,8 @@ const FontAwesome = require('react-fontawesome');
 const getUrl = () => new URL(window.location.href);
 const getSearchParams = () => getUrl().searchParams;
 
+const buttonStyle = { borderRadius: 3, width: 180, marginBottom: 5 };
+
 class Pins extends React.Component {
     constructor(props) {
         super(props);
@@ -120,8 +122,8 @@ class Pins extends React.Component {
                 </ul>
                 <button
                     onClick={this.promptNewPin}
-                    className="repl-btns"
-                    style={{ borderRadius: 3, marginTop: 10 }}
+                    className="btn btn-default"
+                    style={Object.assign({ marginTop: 10 }, buttonStyle)}
                 >
                     <FontAwesome name="save" />&nbsp;Save New Pin
                 </button>

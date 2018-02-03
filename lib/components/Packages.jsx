@@ -4,6 +4,18 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const autobind = require('react-autobind');
 const FontAwesome = require('react-fontawesome');
+const queryParams = require('../utils/queryParams');
+
+const buttonStyle = { borderRadius: 3, width: 180, marginBottom: 5 };
+
+const setPackages = (packages) => {
+    const { searchParams } = new URL(window.location.href);
+    searchParams.delete('packages');
+    if (packages) {
+        searchParams.append('packages', packages);
+    }
+    window.location = `${window.location.origin}?${searchParams.toString()}`;
+};
 
 const PromptInput = ({
     value,
@@ -102,11 +114,7 @@ class Packages extends React.Component {
         const allPackages = [...existingPackages, npmPackage];
         const allPackagesString = allPackages.join('|');
 
-        const { searchParams } = new URL(window.location.href);
-        searchParams.delete('packages');
-        searchParams.append('packages', allPackagesString);
-
-        window.location = `${window.location.origin}?${searchParams.toString()}`;
+        setPackages(allPackagesString);
     }
 
     confirmImportPackage() {
@@ -296,11 +304,21 @@ class Packages extends React.Component {
                 </ul>
                 <button
                     onClick={this.promptAddPackage}
-                    className="repl-btns"
-                    style={{ borderRadius: 3 }}
+                    className="btn btn-default"
+                    style={buttonStyle}
                 >
                     <FontAwesome name="plus-circle" />&nbsp;Import Package
                 </button>
+
+                {queryParams.get('packages') && (
+                    <button
+                        onClick={() => setPackages(null)}
+                        className="btn btn-danger"
+                        style={buttonStyle}
+                    >
+                        <FontAwesome name="undo" />&nbsp;Reset Packages
+                    </button>
+                )}
 
                 {this.state.prompt != null && this.state.prompt}
             </div>
