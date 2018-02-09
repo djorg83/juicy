@@ -103,7 +103,7 @@ class App extends React.Component {
 
     render() {
         const { loading } = this.state;
-        const color = loading ? headerColor : this.state.stringColor;
+        const color = loading && headerColor ? headerColor : this.state.stringColor;
         return (
             <div style={{ height: '100%' }}>
                 {loading && (
