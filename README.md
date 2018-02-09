@@ -112,12 +112,16 @@ yarn add juicy-repl
 
 
 ``` javascript
-const startRepl = require('juicy-repl');
+const juicy = require('juicy-repl');
 
 // supply any, all, or no options
-const juicyOptions = { ... };
+const options = { ... };
 
-startRepl(juicyOptions);
+juicy(options)
+    .then((app) => {
+        // extend express app
+        app.get('/custom/api', res.json({ data: 'custom' }));
+    });
 ```
 
 

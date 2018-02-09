@@ -124,12 +124,16 @@ ${codeBlock}
 
 const runProgramaticExample = `
 ${codeBlock} javascript
-const startRepl = require('${pkg.name}');
+const juicy = require('${pkg.name}');
 
 // supply any, all, or no options
-const juicyOptions = { ... };
+const options = { ... };
 
-startRepl(juicyOptions);
+juicy(options)
+    .then((app) => {
+        // extend express app
+        app.get('/custom/api', res.json({ data: 'custom' }));
+    });
 ${codeBlock}
 `;
 
